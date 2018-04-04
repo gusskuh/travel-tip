@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Tip</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main>
+        <div id="map" class="map">
+        </div>
+    </main>
+
+    <div class="navigation">
+
+        <form action="" onsubmit="return false" class="flex flex-column">
+            <div class="flex">
+                <button class="search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <input class="user-address" type="text" placeholder="Enter location" autofocus>
+            </div>
+            <button class="my-loc" title="get my location">
+                <i class="fab fa-periscope"></i>
+            </button>
+        </form>
+            <button class="copy-location" title="copy location">
+                <i class="far fa-copy"></i>
+            </button>
+            <div class="flex">
+                <button class="weather">
+                    <i class="fab fa-cloudversify"></i>
+                </button>
+                <div class="flex weather-details justify-center">
+                    
+                        <h4>Temp is: <span class="temp"></span>&#8451;</h4>
+                        <h4>Conditions: <span class="desc"></span></h4>
+                        <h4 class="icons"><img class="icon" src="" alt="" /></h4>
+                    
+                </div>
+            </div>
+            <div>
+                 <h2>.</h2>
+            </div>
+        </div>
+    <input type="text" class="url">
+
+    <script type="module" src="js/main.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

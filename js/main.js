@@ -106,7 +106,7 @@ function setMarkerWithCenter(pos) {
 
 function renderLocAndSetUrl(loc) {
     document.querySelector('h2').innerHTML = loc;
-    document.querySelector('.url').value = `http://127.0.0.1:5500/travel-tip-startHere/index.html?lat=${gLat}&lng=${gLng}`
+    document.querySelector('.url').value = `https://gusskuh.github.io/travel-tip/?lat=${gLat}&lng=${gLng}`
 }
 
 function getPos() {

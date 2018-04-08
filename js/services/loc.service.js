@@ -62,10 +62,8 @@ function getWeather(lat, lon) {
                 appTemp: res.data.data[0].app_temp,
                 sunset: res.data.data[0].sunset,
                 sunrise: res.data.data[0].sunrise
-               
+
             }
-            // console.log('temp is:', res.data.main.temp);
-            // console.log('weather is:', res.data.weather[0].description);
             return tempDetails;
         })
 }
@@ -90,13 +88,10 @@ function getForecast(lat, lon) {
                 day3max: res.data.data[3].max_temp,
                 day3min: res.data.data[3].min_temp
             }
-            // console.log('temp is:', res.data.main.temp);
-            // console.log('weather is:', res.data.weather[0].description);
+
             return tempDetails;
         })
 }
-
-
 
 
 export default {

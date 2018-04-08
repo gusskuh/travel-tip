@@ -44,8 +44,8 @@ main{
 
 .map{
     z-index: 1;
-    width:100%;
-    height: 100%;
+    width:100vw;
+    height: 100vh;
 }
 
 button {
@@ -67,9 +67,7 @@ button:hover {
 .weather-details {
    
     width: 600px;
-    /* transition: width 0.3s ease-in-out ; */
     background-color: rgba(240, 255, 255, 0.726);
-    /* position: inline-block; */
     font-size: 1.5em;
     padding: 20px;
 }
@@ -103,13 +101,7 @@ button:hover {
 .sun {
     height: 80px;
 }
-/* .weather:hover + .weather-details {
-   
-    
-    background-color: rgba(240, 255, 255, 0.726); 
-    width: 450px;
-    
-} */
+
 .app-temps {
     font-size: 1.3em;
 }
@@ -321,7 +313,6 @@ body {
         height: 100px;
         font-size: 2em;
         margin-top: 18px;
-        /* display: none; */
     }
 
     .daily-forecast {

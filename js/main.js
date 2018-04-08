@@ -11,7 +11,7 @@ var gLng;
 
 window.onload = () => {
     mapService.initMap()
-    .then(
+        .then(
         () => {
             var url = document.querySelector('.url').value;
             var lat = +getParameterByName('lat', url);
@@ -22,12 +22,13 @@ window.onload = () => {
                     renderLocAndSetUrl(loc);
                 });
                 weatherGet(lat, lng);
+                foreCastgGet(lat, lng);
             }
             else {
                 getPos();
-            } 
+            }
         }
-    );
+        );
 }
 
 document.querySelector('.search').addEventListener('click', (ev) => {
@@ -39,14 +40,19 @@ document.querySelector('.search').addEventListener('click', (ev) => {
         setMarkerWithCenter(loc.coords);
         renderLocAndSetUrl(loc.address);
         weatherGet(loc.coords.lat, loc.coords.lng);
-        
+        foreCastgGet(loc.coords.lat, loc.coords.lng);
+
     });
+})
+
+document.querySelector('.search').addEventListener('mouseover', (event) => {
+    document.querySelector('.user-address').focus();
 })
 
 document.querySelector('.my-loc').addEventListener('click', () => {
     getPos();
     document.querySelector('.user-address').value = '';
-    
+
 })
 
 document.querySelector('.copy-location').addEventListener('click', () => {
@@ -55,16 +61,41 @@ document.querySelector('.copy-location').addEventListener('click', () => {
     document.execCommand("Copy");
 })
 
-document.querySelector('.search').addEventListener('mouseover', (event) => {
-    document.querySelector('.user-address').focus();
-})
 
 
 function weatherGet(lat, lng) {
     locService.getWeather(lat, lng).then(tempDetails => {
         document.querySelector('.temp').innerHTML = parseInt(tempDetails.temp);
         document.querySelector('.desc').innerHTML = tempDetails.desc;
-        document.querySelector('.icon').setAttribute('src', "http://openweathermap.org/img/w/" + tempDetails.icon + ".png");
+
+        document.querySelector('.app-temp').innerHTML = tempDetails.appTemp;
+        document.querySelector('.sunset').innerHTML = tempDetails.sunset;
+        document.querySelector('.sunrise').innerHTML = tempDetails.sunrise;
+        
+        document.querySelector('.icon').setAttribute('src', "https://www.weatherbit.io/static/img/icons/" + tempDetails.icon + ".png");
+    });
+}
+
+function foreCastgGet(lat, lng){
+    locService.getForecast(lat, lng).then(tempDetails => {
+        document.querySelector('.day1-date').innerHTML = tempDetails.day1Date;
+        document.querySelector('.day1-icon').setAttribute('src', "https://www.weatherbit.io/static/img/icons/" + tempDetails.day1Icon + ".png");
+        document.querySelector('.day1-desc').innerHTML = tempDetails.day1Desc;
+        document.querySelector('.day1-max-deg').innerHTML = tempDetails.day1max;
+        document.querySelector('.day1-min-deg').innerHTML = tempDetails.day1min;
+
+        document.querySelector('.day2-date').innerHTML = tempDetails.day2Date;
+        document.querySelector('.day2-icon').setAttribute('src', "https://www.weatherbit.io/static/img/icons/" + tempDetails.day2Icon + ".png");
+        document.querySelector('.day2-desc').innerHTML = tempDetails.day2Desc;
+        document.querySelector('.day2-max-deg').innerHTML = tempDetails.day2max;
+        document.querySelector('.day2-min-deg').innerHTML = tempDetails.day2min;
+
+        document.querySelector('.day3-date').innerHTML = tempDetails.day3Date;
+        document.querySelector('.day3-icon').setAttribute('src', "https://www.weatherbit.io/static/img/icons/" + tempDetails.day3Icon + ".png");
+        document.querySelector('.day3-desc').innerHTML = tempDetails.day3Desc;
+        document.querySelector('.day3-max-deg').innerHTML = tempDetails.day3max;
+        document.querySelector('.day3-min-deg').innerHTML = tempDetails.day3min;
+
     });
 }
 
@@ -80,25 +111,26 @@ function renderLocAndSetUrl(loc) {
 
 function getPos() {
     locService.getPosition()
-    .then(pos => {
-        gLat = pos.coords.latitude;
-        gLng = pos.coords.longitude;
-        setMarkerWithCenter({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-        locService.getNameByCoords(gLat, gLng).then(loc => {
-            renderLocAndSetUrl(loc);
-        });
-        weatherGet(gLat, gLng);
-    })
-    .catch(err => {
-        console.log('err!!!', err);
-    })
+        .then(pos => {
+            gLng = pos.coords.longitude;
+            gLat = pos.coords.latitude;
+            setMarkerWithCenter({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+            locService.getNameByCoords(gLat, gLng).then(loc => {
+                renderLocAndSetUrl(loc);
+            });
+            weatherGet(gLat, gLng);
+            foreCastgGet(gLat, gLng);
+        })
+        .catch(err => {
+            console.log('err!!!', err);
+        })
 }
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-    results = regex.exec(url);
+        results = regex.exec(url);
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));

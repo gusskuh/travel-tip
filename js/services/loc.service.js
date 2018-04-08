@@ -53,15 +53,45 @@ function getNameByCoords(lat, lng) {
 }
 
 function getWeather(lat, lon) {
-    return axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=be17c085f499e7bbe7c298115551f128&units=metric`)
+    return axios.get(`https://api.weatherbit.io/v2.0/current?key=1645a6b8133a4d809f23bde481bde143&lat=${lat}&lon=${lon}`)
         .then(function (res) {
             var tempDetails = {
-                temp: res.data.main.temp,
-                desc: res.data.weather[0].description,
-                icon: res.data.weather[0].icon
+                temp: res.data.data[0].temp,
+                desc: res.data.data[0].weather.description,
+                icon: res.data.data[0].weather.icon,
+                appTemp: res.data.data[0].app_temp,
+                sunset: res.data.data[0].sunset,
+                sunrise: res.data.data[0].sunrise
+               
             }
-            console.log('temp is:', res.data.main.temp);
-            console.log('weather is:', res.data.weather[0].description);
+            // console.log('temp is:', res.data.main.temp);
+            // console.log('weather is:', res.data.weather[0].description);
+            return tempDetails;
+        })
+}
+
+function getForecast(lat, lon) {
+    return axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?key=1645a6b8133a4d809f23bde481bde143&lat=${lat}&lon=${lon}`)
+        .then(function (res) {
+            var tempDetails = {
+                day1Date: res.data.data[1].datetime,
+                day1Icon: res.data.data[1].weather.icon,
+                day1Desc: res.data.data[1].weather.description,
+                day1max: res.data.data[1].max_temp,
+                day1min: res.data.data[1].min_temp,
+                day2Date: res.data.data[2].datetime,
+                day2Icon: res.data.data[2].weather.icon,
+                day2Desc: res.data.data[2].weather.description,
+                day2max: res.data.data[2].max_temp,
+                day2min: res.data.data[2].min_temp,
+                day3Date: res.data.data[3].datetime,
+                day3Icon: res.data.data[3].weather.icon,
+                day3Desc: res.data.data[3].weather.description,
+                day3max: res.data.data[3].max_temp,
+                day3min: res.data.data[3].min_temp
+            }
+            // console.log('temp is:', res.data.main.temp);
+            // console.log('weather is:', res.data.weather[0].description);
             return tempDetails;
         })
 }
@@ -73,5 +103,6 @@ export default {
     getPosition,
     getAddress,
     getNameByCoords,
-    getWeather
+    getWeather,
+    getForecast
 }
